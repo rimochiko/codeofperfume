@@ -4048,6 +4048,11 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
+lib-flexible@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.npmmirror.com/lib-flexible/-/lib-flexible-0.3.2.tgz#06f5a74832314a2d35c12039bc9c3ca2daeaa426"
+  integrity sha512-9yowMWA70tKhKdCJDaltY0mNQG4OWo7pWKScnTp9aiSxS7s20ZYlwBRE3335nweOf5qKXVC7sDxJwMPM8/MFZg==
+
 lilconfig@^2.0.3:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-2.1.0.tgz#78e23ac89ebb7e1bfbf25b18043de756548e7f52"
@@ -4590,6 +4595,11 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
+p5@^1.9.4:
+  version "1.9.4"
+  resolved "https://registry.npmmirror.com/p5/-/p5-1.9.4.tgz#948ec06c123105f516b0ef63db01c44b93c93b72"
+  integrity sha512-dhiZ9mvXx5pm8eRwml34xbeUwce4uS9Q2za0YOHg2p97N9iNAb5hTIHAt77CHKHXAh6A16u/oalz5egRfTyFWw==
+
 param-case@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/param-case/-/param-case-3.0.4.tgz#7d17fe4aa12bde34d4a77d91acfb6219caad01c5"
@@ -4679,6 +4689,11 @@ path-type@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
+
+perlin.js@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/perlin.js/-/perlin.js-1.0.0.tgz#9bd275e6da15360fa30367c226db7f7fe620bc49"
+  integrity sha512-0MVPmdJDH6GjDoa0hOTboFTPNZeJXhFRlsyEi1GPEVke0vhF1zVrtfEaQ3hH7M2NB5+V0rCPOGWjkBksQhZB4A==
 
 picocolors@^0.2.1:
   version "0.2.1"
