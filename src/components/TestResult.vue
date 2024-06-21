@@ -8,20 +8,24 @@
           <div id="result-cover-main" ref="coverRef">
           </div>
         </div>
+        <div class="result-desc-title">几何解析：</div>
         <div class="result-desc-text">
             {{ result?.desc }}
         </div>
         <div v-if="result?.song" class="result-song-block">
             <div class="result-song-text">正缘歌曲：</div>
+            <div class="result-song-quote">
+              {{ result?.song?.quote }}
+            </div>
             <div class="result-song-cover">
-                <img :src="result.song?.cover" alt="">
+                <img :src="`static/${result.song?.cover}`" alt="">
             </div>
             <div class="result-song-title">《{{ result.song.title }}》</div>
             <div class="result-song-desc">“{{ result.song.desc }}”</div>
         </div>
         <div class="result-buttons">
           <div @click="playAgain" class="result-opt-button">[ 再测一次 ]</div>
-          <div @click="share" class="result-opt-button">[ 分享结果 ]</div>
+          <!--<div @click="share" class="result-opt-button"></div>-->
         </div>
     </div>
   </template>
@@ -82,7 +86,7 @@
           } else if (props.result.title === '环体') {
             target.torus(80, 40, 5);
           } else {
-            target.plane(120, 120);
+            target.plane(140, 140);
           }
           target.pop();
         }
@@ -98,6 +102,10 @@
       const share = () => {
       }
 
+      const getImageUrl = (name) => {
+        return new URL(`../assets/${name}`, import.meta.url).href;
+      }
+
       onMounted(() => {
         new p5(initResultCover);
       })
@@ -107,6 +115,7 @@
         playAgain,
         coverRef,
         share,
+        getImageUrl,
       }
     }
   }
@@ -138,21 +147,22 @@
   
   .result-guide-text {
     margin: 1rem 0.8rem 0;
-    font-size: 0.68rem;
+    font-size: 0.58rem;
     font-style: italic;
   }
 
   .result-main-text {
     margin: 0 0.8rem 0rem;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: bold;
   }
 
   .result-desc-text {
     margin: -0.2rem 0.8rem 0.4rem;
-    font-size: 0.48rem;
+    font-size: 0.42rem;
     letter-spacing: 0.06rem;
     line-height: 1.8;
+    word-break: break-all;
   }
 
   .result-song-block {
@@ -165,22 +175,48 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+    margin-top: 1rem;
   }
 
+  .result-song-cover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.4rem 0;
+  }
+
+  .result-song-cover img {
+    border-radius: 0.5rem;
+  }
+  .result-desc-title {
+    font-style: italic;
+    font-size: 0.48rem;
+    text-decoration: underline;
+    margin: 0rem 0.8rem 0.4rem;
+  }
   .result-song-text {
     font-style: italic;
-    font-size: 0.58rem;
+    font-size: 0.48rem;
     margin-bottom: 0.4rem;
+    text-decoration: underline;
   }
   .result-song-title {
-    font-size: 0.58rem;
+    font-size: 0.48rem;
     text-align: center;
     font-weight: bold;
     margin-bottom: 0.4rem;
   }
   .result-song-desc {
-    font-size: 0.48rem;
+    font-size: 0.42rem;
     text-align: center;
+    letter-spacing: 0.06rem;
+    line-height: 1.8;
+  }
+
+  .result-song-quote {
+    font-size: 0.42rem;
+    letter-spacing: 0.06rem;
+    line-height: 1.8;
   }
 
   .result-cover {
@@ -190,9 +226,9 @@
   .result-opt-button {
     color: #fff;
     font-style: italic;
-    margin: 1rem 0.8rem;
+    margin: 1rem 0.6rem;
     padding: 0.1rem 0.5rem;
-    font-size: 0.56rem;
+    font-size: 0.48rem;
     border-radius: 1rem;
   }
 

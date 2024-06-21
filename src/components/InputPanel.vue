@@ -138,7 +138,7 @@
   .background-block-s1 {
     width: 5rem;
     height: 5rem;
-    background-image: url('../assets/s5.png');
+    background-image: url('https://s21.ax1x.com/2024/06/21/pkDHqX9.png');
     background-size: 100% auto;
     position: absolute;
     left: -0.5rem;
@@ -149,7 +149,7 @@
   .background-block-s2 {
     width: 4rem;
     height: 4rem;
-    background-image: url('../assets/s2.png');
+    background-image: url('https://s21.ax1x.com/2024/06/21/pkDH5kV.png');
     background-size: 100% 100%;
     position: absolute;
     right: -1rem;
@@ -160,7 +160,7 @@
   .background-block-s4 {
     width: 6rem;
     height: 6rem;
-    background-image: url('../assets/s6.png');
+    background-image: url('https://s21.ax1x.com/2024/06/21/pkDHOmR.png');
     background-size: 100% 100%;
     position: absolute;
     left: 0.5rem;

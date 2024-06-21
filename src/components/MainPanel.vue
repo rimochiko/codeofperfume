@@ -2,7 +2,7 @@
   <div class="home-container">
     <div class="home-content">
       <div class="home-title">
-        <img src="../assets/title.png" />
+        <img src="https://s21.ax1x.com/2024/06/21/pkDHX01.png" />
       </div>
       <div class="home-button">
         <div class="home-button-img" @click="startTest">[ 开始测试 ]</div>
@@ -95,7 +95,7 @@ export default {
 .background-block-s1 {
   width: 6rem;
   height: 2.2rem;
-  background-image: url('../assets/s1.png');
+  background-image: url('https://s21.ax1x.com/2024/06/21/pkDHsfS.png');
   background-size: 100% auto;
   position: absolute;
   right: -0.5rem;
@@ -106,7 +106,7 @@ export default {
 .background-block-s2 {
   width: 20vh;
   height: 20vh;
-  background-image: url('../assets/s2.png');
+  background-image: url('https://s21.ax1x.com/2024/06/21/pkDH5kV.png');
   background-size: 100% 100%;
   position: absolute;
   left: -0.5rem;
@@ -117,7 +117,7 @@ export default {
 .background-block-s3 {
   width: 50vh;
   height: 50vh;
-  background-image: url('../assets/s3.png');
+  background-image: url('https://s21.ax1x.com/2024/06/21/pkDHofU.png');
   background-size: 100% 100%;
   position: absolute;
   left: 1rem;
@@ -128,7 +128,7 @@ export default {
 .background-block-s4 {
   width: 20vh;
   height: 20vh;
-  background-image: url('../assets/s4.png');
+  background-image: url('https://s21.ax1x.com/2024/06/21/pkDHHl4.png');
   background-size: 100% 100%;
   position: absolute;
   left: -0.6rem;
@@ -139,7 +139,7 @@ export default {
 .background-block-s5 {
   width: 20vh;
   height: 20vh;
-  background-image: url('../assets/s5.png');
+  background-image: url('https://s21.ax1x.com/2024/06/21/pkDHqX9.png');
   background-size: 100% 100%;
   position: absolute;
   right: -0.3rem;

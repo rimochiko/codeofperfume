@@ -1,32 +1,49 @@
 <template>
-  <div>
-    <transition name="fade">
-      <MainPanel
-        v-if="isShowMain"
-        class="main-content" @custom-event="handleCustomEvent"/>
+  <div style="height: 100%; width: 100%; position: relative">
+    <transition name="fadeloading">
+      <div v-if="isLoading && isMobileRef" class="loading-panel">
+        <div class="loading-blur"></div>
+        <div class="loading-text">Perfume 加载中...</div>
+      </div>
     </transition>
-    <transition name="fade">
-      <TestPanel
-        v-if="isShowTest"
-        @custom-event="handleCustomEvent"
-      />
-    </transition>
-    <transition name="fade">    
-      <InputPanel
-        v-if="isShowInput"
-        @custom-event="handleCustomEvent"
-      />
-    </transition>
-    <transition name="fade">    
-      <TestResult
-        v-if="isShowResult"
-        @custom-event="handleCustomEvent"
-        :result="result"
-        :name="name"
-      />
-    </transition>
-    <div id="bottom-bg"></div>
-    <div id="main-bg" ref="mainBg">
+    <div v-if="isMobileRef">
+      <transition name="fade">
+        <MainPanel
+          v-if="isShowMain"
+          class="main-content" @custom-event="handleCustomEvent"/>
+      </transition>
+      <transition name="fade">
+        <TestPanel
+          v-if="isShowTest"
+          @custom-event="handleCustomEvent"
+        />
+      </transition>
+      <transition name="fade">    
+        <InputPanel
+          v-if="isShowInput"
+          @custom-event="handleCustomEvent"
+        />
+      </transition>
+      <transition name="fade">    
+        <TestResult
+          v-if="isShowResult"
+          @custom-event="handleCustomEvent"
+          :result="result"
+          :name="name"
+        />
+      </transition>
+      <div id="bottom-bg"></div>
+      <div id="main-bg" ref="mainBg">
+      </div>
+    </div>
+    <div v-else class="empty-container">
+      <div class="empty-title">
+        <img src="https://s21.ax1x.com/2024/06/21/pkDHX01.png" alt="">
+      </div>
+      <div class="empty-tips">个人粉丝制作，各位看官娱乐看待，使用手机进行扫码访问^-^</div>
+      <div>
+        <canvas ref="qrCodeRef" width="300" height="300"></canvas>
+      </div>
     </div>
   </div>
 </template>
@@ -41,6 +58,8 @@ import Perlin from 'perlin.js';
 import { onMounted, ref, Transition } from 'vue';
 import { EVENT_NAME } from './assets/constant';
 import { testResult } from './assets/question';
+import { isMobile } from './libs/utils';
+import QRCode from 'qrcode';
 
 export default {
   name: 'App',
@@ -53,6 +72,7 @@ export default {
   },
   setup() {
     let mainBg = ref(null);
+    let qrCodeRef = ref(null);
     const initBackground = (target) => {
       target.setup = () => {
         const cvs = target.createCanvas(target.windowWidth, target.windowHeight);
@@ -114,6 +134,8 @@ export default {
     let answers = ref([]);
     let result = ref({});
     let name = ref('');
+    let isMobileRef = ref(isMobile());
+    let isLoading = ref(true);
 
     let calculateResult = () => {
       let currScore = {
@@ -186,7 +208,30 @@ export default {
     }
 
     onMounted(() => {
-      new p5(initBackground);
+      if (isMobileRef.value) {
+        new p5(initBackground);
+      } else {
+        const ctx = qrCodeRef.value.getContext('2d');
+        QRCode.toDataURL(window.location.href, function(err, url) {
+          if (err) throw err;
+          const img = new Image();
+          img.onload = function() {
+            ctx.drawImage(
+              img,
+              0,
+              0,
+              qrCodeRef.value.width,
+              qrCodeRef.value.height
+          );
+          };
+          img.src = url;
+        });        
+      }
+      const timer = setTimeout(() => {
+        clearTimeout(timer);
+        console.log('test');
+        isLoading.value = false;
+      }, 4000);
     })
 
     return {
@@ -198,6 +243,9 @@ export default {
       result,
       handleCustomEvent,
       name,
+      isMobileRef,
+      qrCodeRef,
+      isLoading
     }
   }
 }
@@ -217,6 +265,7 @@ html, body {
   user-select: none;
   -webkit-user-select: none;
   font-family: 'siyuanheiti';
+  background-color: blue;
 }
 
 #app {
@@ -225,6 +274,28 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
   letter-spacing: 0.03rem;
+}
+
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.empty-title img {
+  width: 6rem;
+  margin-bottom: 0.4rem;
+}
+
+.empty-tips {
+  text-align: center;
+  font-size: 0.42rem;
+  color: #fff;
+  padding: 0 1rem;
+  margin-bottom: 0.4rem;
 }
 
 .main-bg {
@@ -240,33 +311,8 @@ html, body {
   z-index: 10;
 }
 
-.bottom-bg {
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  background-color: rgba(0, 0, 255, 0.932);
-  background-image: 
-    radial-gradient(closest-side, rgb(0, 0, 255), rgba(235, 105, 78, 0)),
-    radial-gradient(closest-side, rgb(6, 55, 189), rgba(243, 11, 164, 0)),
-    radial-gradient(closest-side, blue, rgba(254, 234, 131, 0)),
-    radial-gradient(closest-side, rgb(36, 50, 207), rgba(170, 142, 245, 0)),
-    radial-gradient(closest-side, rgb(238, 238, 238), rgba(248, 192, 147, 0));
-  background-size: 
-    150vmax 150vmax,
-    80vmax 80vmax,
-    90vmax 90vmax,
-    110vmax 110vmax,
-    90vmax 90vmax;
-  background-position:
-    -80vmax -80vmax,
-    60vmax -30vmax,
-    10vmax 10vmax,
-    -30vmax -10vmax,
-    50vmax 50vmax;
-  background-repeat: no-repeat;
-  animation: 10s movement linear infinite;
-  z-index: 0;
-  position: relative;
+.loading-text {
+  animation: blink1 0.6s both infinite;
 }
 
 .bottom-bg::after {
@@ -308,50 +354,80 @@ span {
   opacity: 0;
 }
 
-@keyframes movement {
-  0%, 100% {
+.fadeloading-enter-active,
+.fadeloading-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.fadeloading-enter-from,
+.fadeloading-leave-to {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-panel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 100;
+  background-color: rgb(142, 172, 255);
+  background-image: 
+    radial-gradient(closest-side, rgb(0, 0, 255), rgba(235, 105, 78, 0)),
+    radial-gradient(closest-side, #105fe7, rgba(243, 11, 164, 0)),
+    radial-gradient(closest-side, rgb(20, 20, 224), rgba(254, 234, 131, 0)),
+    radial-gradient(closest-side, rgb(30, 68, 175), rgba(170, 142, 245, 0)),
+    radial-gradient(closest-side, rgb(36, 83, 214), rgba(248, 192, 147, 0));
     background-size: 
-      150vmax 150vmax,
-      80vmax 80vmax,
       90vmax 90vmax,
       120vmax 120vmax,
-      100vmax 100vmax;
-    background-position:
-      -80vmax -80vmax,
-      60vmax -30vmax,
-      10vmax 10vmax,
-      -30vmax -10vmax,
-      50vmax 50vmax;
-  }
-  25% {
-    background-size: 
       100vmax 100vmax,
-      90vmax 90vmax,
       100vmax 100vmax,
-      90vmax 90vmax,
-      60vmax 60vmax;
+      80vmax 80vmax;
     background-position:
-      -60vmax -90vmax,
-      50vmax -40vmax,
-      0vmax -20vmax,
-      -40vmax -20vmax,
-      40vmax 60vmax;
-  }
-  50% {
+      -20vmax -30vmax,
+      50vmax -30vmax,
+      20vmax 0vmax,
+      -10vmax 10vmax,
+      -40vmax 60vmax;
+  background-repeat: no-repeat;
+  animation: 5s movement linear infinite;
+  color: #fff;
+  font-size: 0.42rem;
+  font-style: italic;
+}
+
+.loading-blur {
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+@keyframes movement {
+  0% {
     background-size: 
-      80vmax 80vmax,
-      110vmax 110vmax,
-      80vmax 80vmax,
-      60vmax 60vmax,
-      100vmax 100vmax;
+      90vmax 90vmax,
+      120vmax 120vmax,
+      100vmax 100vmax,
+      100vmax 100vmax,
+      80vmax 80vmax;
     background-position:
-      -50vmax -70vmax,
-      40vmax -30vmax,
-      10vmax 0vmax,
-      20vmax 10vmax,
-      30vmax 70vmax;
+      -20vmax -30vmax,
+      50vmax -30vmax,
+      20vmax 0vmax,
+      -10vmax 10vmax,
+      -40vmax 60vmax;
   }
-  75% {
+  100% {
     background-size: 
       90vmax 90vmax,
       90vmax 90vmax,
@@ -364,6 +440,18 @@ span {
       20vmax 0vmax,
       -10vmax 10vmax,
       40vmax 60vmax;
+  }
+}
+
+@keyframes blink1 {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
   }
 }
 </style>
